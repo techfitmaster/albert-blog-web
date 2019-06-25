@@ -1,7 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import HelloWorld from '@/components/HelloWorld'
-import Home from '@/views/home/index'
 import NotFound from '@/views/404'
 import Login from '@/views/login/index'
 
@@ -10,9 +8,9 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/index',
+      path: '/layout',
       name: '首页',
-      component: Home
+      component: ()=> import('@/views/layout/index')
     },
     {
       path: '/login',
