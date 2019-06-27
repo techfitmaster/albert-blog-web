@@ -10,19 +10,20 @@
     right:0;
      top:0"
     >
-      <el-row type="flex" >
+      <el-row type="flex">
         <el-col :span="12" style="font-size: 30px;
-    font-weight: 400">爱折腾的Albert</el-col>
+    font-weight: bold;">爱折腾的Albert
+        </el-col>
         <el-col :span="6">
-          <el-row type="flex" >
-            <el-col :span="6" style></el-col>
-            <el-col :span="6">
-              <el-input placeholder="请输入内容" prefix-icon="el-icon-search" v-model="input2"></el-input>
+          <el-row type="flex">
+            <el-col :span="12">
+              <el-input placeholder="请输入内容" suffix-icon="el-icon-search" v-model="search"></el-input>
             </el-col>
-            <el-col :span="3" style>
+            <el-col :span="4"></el-col>
+            <el-col :span="4" style>
               <div @click="getArticle">文章</div>
             </el-col>
-            <el-col :span="3">
+            <el-col :span="4">
               <div @click="getManage">管理</div>
             </el-col>
           </el-row>
@@ -36,89 +37,165 @@
       </el-row>
     </el-header>
     <el-container style="margin-top:100px">
-      <el-aside width="15%"></el-aside>
+      <el-aside width="10%"></el-aside>
       <el-container v-if="showArticle">
         <el-main>
           <el-timeline>
             <el-timeline-item
               timestamp="2018/4/12"
               placement="top"
-              v-for="(index,item) in articles"
+              v-for="(item,index) in articles"
               :key="index"
             >
-              <el-card style="with:100%;height:200px;background-color:#e9eef3; margin:10px">
-                <div style="with:100%;height:50px;">1</div>
-                <div style="with:100%;height:150px;">文章内容</div>
+              <el-card style="with:100%;height:200px;background-color:#ffffff; margin:10px">
+                <div
+                  style="with:100%;height:50px;font-family: 'Microsoft YaHei','SF Pro Display',Roboto,Noto,Arial,'PingFang SC',sans-serif;font-size: 18px; font-weight: 400;"
+                >{{item.title}}
+                </div>
+                <div style="with:100%;height:150px; text-align: left;">{{item.content}}</div>
               </el-card>
             </el-timeline-item>
           </el-timeline>
         </el-main>
-        <el-aside width="400px" style="margin-left:10px;">
-          <el-row type="flex" style="margin-top:10px">
+        <el-aside width="300px" style="margin-left:10px;">
+          <el-row type="flex">
             <el-col :span="6"></el-col>
             <el-col :span="12"></el-col>
           </el-row>
-          <el-row type="flex" v-for="(index,item) in articles"
-              :key="index">
-            <el-col :span="2"></el-col>
-            <el-col :span="20">
-              <div style="height:200px;width:100%;margin-top:20px;background-color:#e9eef3">排行</div>
+          <el-row type="flex" style="margin-top:40px;">
+            <el-col>
+              <el-card shadow="always" style="background-color:#ffffff">
+                <el-row style="width:100%;">
+                  文章排行
+                </el-row>
+                <el-row type="flex" style="margin-top:10px;font-size: 14px;">
+                  <el-col :span="12" style="text-align: left;">java源码</el-col>
+                  <el-col :span="8"></el-col>
+                  <el-col :span="6" style="color:#bbb">120阅读</el-col>
+                </el-row>
+                <el-row type="flex" style="margin-top:10px;font-size: 14px;">
+                  <el-col :span="12" style="text-align: left;">java源码</el-col>
+                  <el-col :span="8"></el-col>
+                  <el-col :span="6" style="color:#bbb">120阅读</el-col>
+                </el-row>
+                <el-row type="flex" style="margin-top:10px;font-size: 14px;">
+                  <el-col :span="12" style="text-align: left;">java源码</el-col>
+                  <el-col :span="8"></el-col>
+                  <el-col :span="6" style="color:#bbb">120阅读</el-col>
+                </el-row>
+                <el-row type="flex" style="margin-top:10px;font-size: 14px;">
+                  <el-col :span="12" style="text-align: left;">java源码</el-col>
+                  <el-col :span="8"></el-col>
+                  <el-col :span="6" style="color:#bbb">120阅读</el-col>
+                </el-row>
+              </el-card>
             </el-col>
           </el-row>
-      
+          <el-row type="flex" style="margin-top:40px">
+            <el-col>
+              <el-card shadow="always" style="background-color:#ffffff">
+                <el-row style="width:100%;">
+                  文章排行
+                </el-row>
+                <el-row type="flex" style="margin-top:10px;font-size: 14px;">
+                  <el-col :span="12" style="text-align: left;">java</el-col>
+                  <el-col :span="8"></el-col>
+                  <el-col :span="6" style="color:#bbb">12篇</el-col>
+                </el-row>
+                <el-row type="flex" style="margin-top:10px;font-size: 14px;">
+                  <el-col :span="12" style="text-align: left;">spring</el-col>
+                  <el-col :span="8"></el-col>
+                  <el-col :span="6" style="color:#bbb">12篇</el-col>
+                </el-row>
+                <el-row type="flex" style="margin-top:10px;font-size: 14px;">
+                  <el-col :span="12" style="text-align: left;">mybaits</el-col>
+                  <el-col :span="8"></el-col>
+                  <el-col :span="6" style="color:#bbb">12篇</el-col>
+                </el-row>
+                <el-row type="flex" style="margin-top:10px;font-size: 14px;">
+                  <el-col :span="12" style="text-align: left;">hadoop</el-col>
+                  <el-col :span="8"></el-col>
+                  <el-col :span="6" style="color:#bbb">12篇</el-col>
+                </el-row>
+              </el-card>
+            </el-col>
+          </el-row>
         </el-aside>
       </el-container>
       <el-container v-if="showManage">
         <el-main>管理页面</el-main>
       </el-container>
-      <el-aside width="15%"></el-aside>
+      <el-aside width="10%"></el-aside>
     </el-container>
   </el-container>
 </template>
 
 <script>
-import { fail } from "assert";
-export default {
-  name: "Layout",
-  data() {
-    return {
-      showArticle: true,
-      showManage: false,
-      articles: [{}, {}, {}, {}, {}, {}, {}, {}]
-    };
-  },
-  methods: {
-    getArticle() {
-      (this.showArticle = true), (this.showManage = false);
+
+  export default {
+    name: "Layout",
+    data() {
+      return {
+        showArticle: true,
+        showManage: false,
+        search: "",
+        articles: [
+          {
+            title: "Vue 项目打包部署到nginx，请求时间长问题",
+            content:
+              "修改config/index.js文件修改config/index.js文件修改config/index.js文件修改config/index.js文件修改config/index.js文件"
+          },
+          {
+            title: "Vue 项目打包部署到nginx，请求时间长问题",
+            content:
+              "修改config/index.js文件修改config/index.js文件修改config/index.js文件修改config/index.js文件修改config/index.js文件"
+          },
+          {
+            title: "Vue 项目打包部署到nginx，请求时间长问题",
+            content:
+              "修改config/index.js文件修改config/index.js文件修改config/index.js文件修改config/index.js文件修改config/index.js文件"
+          },
+          {
+            title: "Vue 项目打包部署到nginx，请求时间长问题",
+            content:
+              "修改config/index.js文件修改config/index.js文件修改config/index.js文件修改config/index.js文件修改config/index.js文件"
+          },
+          {
+            title: "Vue 项目打包部署到nginx，请求时间长问题",
+            content:
+              "修改config/index.js文件修改config/index.js文件修改config/index.js文件修改config/index.js文件修改config/index.js文件"
+          },
+          {
+            title: "Vue 项目打包部署到nginx，请求时间长问题",
+            content:
+              "修改config/index.js文件修改config/index.js文件修改config/index.js文件修改config/index.js文件修改config/index.js文件"
+          },
+          {
+            title: "Vue 项目打包部署到nginx，请求时间长问题",
+            content:
+              "修改config/index.js文件修改config/index.js文件修改config/index.js文件修改config/index.js文件修改config/index.js文件"
+          },
+          {
+            title: "Vue 项目打包部署到nginx，请求时间长问题",
+            content:
+              "修改config/index.js文件修改config/index.js文件修改config/index.js文件修改config/index.js文件修改config/index.js文件"
+          }
+        ]
+      };
     },
-    getManage() {
-      (this.showArticle = false), (this.showManage = true);
+    methods: {
+      getArticle() {
+        (this.showArticle = true), (this.showManage = false);
+      },
+      getManage() {
+        (this.showArticle = false), (this.showManage = true);
+      }
     }
-  }
-};
+  };
 </script>
 
 <style scoped>
-.el-header {
-  /* background-color: #e9eef3; */
-  color: #333;
-  height: 500;
-}
-.el-aside {
-  /* background-color: #d3dce6; */
-  color: #333;
-  text-align: center;
-}
 
-.el-main {
-  /* background-color: #e9eef3; */
-  color: #333;
-  text-align: center;
-}
-
-.box-card {
-  height: 200px;
-}
 </style>
 
 
