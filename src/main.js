@@ -11,7 +11,10 @@ import axios from './utils/http'
 Vue.config.productionTip = false
 Vue.use(ElementUI);
 Vue.prototype.$axios = axios
+import mavonEditor from 'mavon-editor'
+import 'mavon-editor/dist/css/index.css'
 /* eslint-disable no-new */
+Vue.use(mavonEditor)
 new Vue({
   el: '#app',
   router,
