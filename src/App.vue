@@ -17,4 +17,11 @@ export default {
   text-align: center;
   color: #2c3e50;
 }
+
+.click-btn{
+  cursor:pointer;
+}
+.click-btn:hover{
+  color: black;
+}
 </style>
