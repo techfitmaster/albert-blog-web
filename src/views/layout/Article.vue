@@ -1,6 +1,6 @@
 <template>
   <el-container v-if="isVisible">
-    <el-aside width="300px" style="margin-left:10px;">
+    <el-aside width="300px" style="margin-left:0px;">
       <el-row type="flex">
         <el-col :span="6"></el-col>
         <el-col :span="12"></el-col>
@@ -64,8 +64,8 @@
         </el-col>
       </el-row>
     </el-aside>
-    <el-main>
-      <el-container style="margin-top:20px; width: 100%;" v-if="showArticleDetail">
+    <el-main style="margin-top: 10px">
+      <el-container style="width: 100%; padding-left: 50px" v-if="showArticleDetail">
         <mavon-editor style="width:100%; z-index:0; border: 1px solid #ffffff"
                       :boxShadow="false"
                       :value="value"
@@ -76,7 +76,7 @@
 
         />
       </el-container>
-      <el-timeline v-else-if="showArticleDetail===false">
+      <el-timeline v-else-if="showArticleDetail === false">
         <el-timeline-item
           timestamp="2018/4/12"
           placement="top"
@@ -84,18 +84,26 @@
           :key="index"
 
         >
-          <el-card style="with:100%;height:200px;background-color:#ffffff; margin:10px">
-            <div
-              style="with:100%;height:50px;font-family: 'Microsoft YaHei','SF Pro Display',Roboto,Noto,Arial,'PingFang SC',sans-serif;font-size: 18px; font-weight: 400;"
-              @click="getArticleDetail">{{item.title}}
-            </div>
-            <div style="with:100%;height:100px; text-align: left;">{{item.content}}</div>
-            <el-row type="flex">
-              <el-col :span="4">评论12</el-col>
-              <el-col :span="4">阅读2000</el-col>
-              <el-col :span="16"></el-col>
+          <el-card style="width:100%;height:120px;background-color:#ffffff; margin:10px">
+            <el-row>
+              <div
+                class="article-title "
+                @click="getArticleDetail(item)">{{item.articleTitle}}
+              </div>
             </el-row>
+            <!--            <el-row>-->
+            <!--              <div style="width:100%;height:100px; text-align: left;">{{item.articleContent}}</div>-->
+            <!--            </el-row>-->
 
+            <el-row type="flex" style="text-align: left;color: #bbb">
+              <el-col :span="2">评论次数 &nbsp;<span style="color: #409eff">{{item.articleComment}}</span></el-col>
+              <el-col :span="2">阅读次数 &nbsp;<span style="color: #409eff">{{item.articleRead}}</span></el-col>
+              <el-col :span="2">点赞次数&nbsp;<span style="color: #409eff">{{item.articleLike}}</span></el-col>
+
+            </el-row>
+            <el-row>
+              <div style="height: 10px"></div>
+            </el-row>
           </el-card>
         </el-timeline-item>
       </el-timeline>
@@ -109,38 +117,46 @@
     data() {
       return {
         showArticleDetail: false,
-        articles: [
-          {
-            title: "Vue 项目打包部署到nginx，请求时间长问题",
-            content:
-              "修改config/index.js文件修改config/index.js文件修改config/index.js文件修改config/index.js文件修改config/index.js文件"
-          },
-          {
-            title: "Vue 项目打包部署到nginx，请求时间长问题",
-            content:
-              "修改config/index.js文件修改config/index.js文件修改config/index.js文件修改config/index.js文件修改config/index.js文件"
-          },
-          {
-            title: "Vue 项目打包部署到nginx，请求时间长问题",
-            content:
-              "修改config/index.js文件修改config/index.js文件修改config/index.js文件修改config/index.js文件修改config/index.js文件"
-          },
-          {
-            title: "Vue 项目打包部署到nginx，请求时间长问题",
-            content:
-              "修改config/index.js文件修改config/index.js文件修改config/index.js文件修改config/index.js文件修改config/index.js文件"
-          }
-        ],
+        articles: [],
+        count: 0
       }
     },
-    props:{
-      isVisible:Boolean
+    props: {
+      isVisible: Boolean,
+      num: Number
     },
     methods: {
-      getArticleDetail() {
-        this.showArticleDetail = true;
+      getArticles() {
+        this.$axios
+          .get("http://127.0.0.1:80/article/page", {
+            "page": 1,
+            "limit": 10,
+          })
+          .then(res => {
+            console.log(res);
+            this.articles = res.data.data.items;
+          })
+          .catch(() => {
+          });
+      },
+      getArticleDetail(item) {
+        this.value = item.articleContent;
+        this.showArticleDetail = true
+        this.showArticles = false;
       }
+
     },
+    created() {
+      this.getArticles();
+    },
+    watch: {
+      num(val) {
+        if (val != this.count) {
+          this.count = val;
+          this.showArticleDetail = false
+        }
+      }
+    }
 
   }
 
@@ -148,5 +164,16 @@
 </script>
 
 <style scoped>
+
+  .article-title {
+    width: 100%;
+    height: 60px;
+    font-family: 'Microsoft YaHei', 'SF Pro Display', Roboto, Noto, Arial, 'PingFang SC', sans-serif;
+    font-size: 20px;
+    font-weight: 400;
+    text-align: left;
+    line-height: 50px;
+    cursor: pointer;
+  }
 
 </style>

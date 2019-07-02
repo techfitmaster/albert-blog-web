@@ -202,7 +202,12 @@
             this.options = res.data.data
           })
           .catch(() => {
-            alert("请求失败");
+            this.$notify.error({
+              title: '',
+              message: '网络请求失败',
+              showClose: false,
+              duration: 1000,
+            });
           });
       },
       createCategory() {
@@ -215,7 +220,12 @@
             this.getArticleCategory();
           })
           .catch(() => {
-            alert("请求失败");
+            this.$notify.error({
+              title: '',
+              message: '网络请求失败',
+              showClose: false,
+              duration: 1000,
+            });
           });
 
       },
@@ -239,6 +249,9 @@
     height: 1000px;
     z-index: 0;
     border: 1px solid #ffffff
+  }
+  .el-header {
+    margin-top: 10px;
   }
 
   .el-tag + .el-tag {

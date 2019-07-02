@@ -8,7 +8,7 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/layout',
+      path: '/',
       name: '首页',
       component: ()=> import('@/views/layout/index')
     },

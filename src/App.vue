@@ -22,6 +22,6 @@ export default {
   cursor:pointer;
 }
 .click-btn:hover{
-  color: black;
+  color: #DDD;
 }
 </style>

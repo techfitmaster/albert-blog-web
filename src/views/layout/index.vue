@@ -1,7 +1,7 @@
 <template>
   <el-container>
     <el-header
-      height="80px"
+      height="60px"
     >
       <el-row type="flex">
         <el-col :span="10" class="header-title">爱折腾的Albert
@@ -31,9 +31,9 @@
         <div class="header-line"></div>
       </el-row>
     </el-header>
-    <el-container style="margin-top:100px">
+    <el-container style="margin-top:60px">
       <el-aside width="10%"></el-aside>
-      <blog-article :isVisible="showArticle"></blog-article>
+      <blog-article :isVisible="showArticle" :num="num"></blog-article>
       <manage :isVisible="showManage"></manage>
       <markdown :isVisible="showMarkDown" @showArticle="showArticle"></markdown>
       <el-aside width="10%"></el-aside>
@@ -55,7 +55,9 @@
         showArticle: true,
         showManage: false,
         showMarkDown: false,
+        showArticleDetail: false,
         search: "",
+        num:0
       };
     },
     components: {
@@ -65,6 +67,9 @@
       getArticle() {
         (this.showArticle = true), (this.showManage = false);
         this.showMarkDown = false;
+        this.num++;
+
+
       },
       getManage() {
         (this.showArticle = false), (this.showManage = true);
@@ -82,8 +87,8 @@
 
 <style scoped>
   .el-header {
-    height: 100px;
-    line-height: 100px;
+    height: 60px;
+    line-height: 60px;
     color: #409eff;
     background-color: #ffffff;
     font-weight: 400;
