@@ -1,6 +1,6 @@
 <template>
   <el-container v-if="isVisible">
-    <el-aside width="300px" style="margin-left:0px;">
+    <el-aside width="300px">
       <el-row type="flex">
         <el-col :span="6"></el-col>
         <el-col :span="12"></el-col>
@@ -65,7 +65,7 @@
       </el-row>
     </el-aside>
     <el-main style="margin-top: 10px">
-      <el-container style="width: 100%; padding-left: 50px" v-if="showArticleDetail">
+      <el-container style="width: 100%; padding-left: 50px;margin-top: 10px" v-if="showArticleDetail">
         <mavon-editor style="width:100%; z-index:0; border: 1px solid #ffffff"
                       :boxShadow="false"
                       :value="value"
@@ -76,37 +76,30 @@
 
         />
       </el-container>
-      <el-timeline v-else-if="showArticleDetail === false">
-        <el-timeline-item
-          timestamp="2018/4/12"
-          placement="top"
-          v-for="(item,index) in articles"
-          :key="index"
+      <el-container style="width: 100%; padding-left: 50px; display: flex; flex-direction: column"  v-else-if="showArticleDetail === false">
+        <el-card style="width:100%;height:120px;background-color:#ffffff; margin:10px" v-for="item in articles">
+          <el-row>
+            <div
+              class="article-title "
+              @click="getArticleDetail(item)">{{item.articleTitle}}
+            </div>
+          </el-row>
+          <!--            <el-row>-->
+          <!--              <div style="width:100%;height:100px; text-align: left;">{{item.articleContent}}</div>-->
+          <!--            </el-row>-->
 
-        >
-          <el-card style="width:100%;height:120px;background-color:#ffffff; margin:10px">
-            <el-row>
-              <div
-                class="article-title "
-                @click="getArticleDetail(item)">{{item.articleTitle}}
-              </div>
-            </el-row>
-            <!--            <el-row>-->
-            <!--              <div style="width:100%;height:100px; text-align: left;">{{item.articleContent}}</div>-->
-            <!--            </el-row>-->
-
-            <el-row type="flex" style="text-align: left;color: #bbb">
-              <el-col :span="2">评论次数 &nbsp;<span style="color: #409eff">{{item.articleComment}}</span></el-col>
-              <el-col :span="2">阅读次数 &nbsp;<span style="color: #409eff">{{item.articleRead}}</span></el-col>
-              <el-col :span="2">点赞次数&nbsp;<span style="color: #409eff">{{item.articleLike}}</span></el-col>
-
-            </el-row>
-            <el-row>
-              <div style="height: 10px"></div>
-            </el-row>
-          </el-card>
-        </el-timeline-item>
-      </el-timeline>
+          <el-row type="flex" style="text-align: left;color: #bbb">
+            <el-col :span="2">评论次数 &nbsp;<span style="color: #409eff">{{item.articleComment}}</span></el-col>
+            <el-col :span="2">阅读次数 &nbsp;<span style="color: #409eff">{{item.articleRead}}</span></el-col>
+            <el-col :span="2">点赞次数&nbsp;<span style="color: #409eff">{{item.articleLike}}</span></el-col>
+            <el-col :span="8"></el-col>
+            <el-col :span="10" style="text-align: right">发布时间&nbsp;<span style="color: #409eff">{{item.gmtCreate}}</span></el-col>
+          </el-row>
+          <el-row>
+            <div style="height: 10px"></div>
+          </el-row>
+        </el-card>
+      </el-container>
     </el-main>
   </el-container>
 </template>

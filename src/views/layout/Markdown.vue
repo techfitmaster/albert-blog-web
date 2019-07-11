@@ -250,9 +250,7 @@
     z-index: 0;
     border: 1px solid #ffffff
   }
-  .el-header {
-    margin-top: 10px;
-  }
+
 
   .el-tag + .el-tag {
     margin-left: 10px;
