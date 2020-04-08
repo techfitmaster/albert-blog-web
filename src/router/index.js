@@ -19,8 +19,16 @@ export default new Router({
     },
     {
       path: '*',
+
+
+
       name: '/404',
       component: NotFound
     },
+    {
+      path:'/write',
+      name:'/写文章',
+      component:()=>import("@/views/layout/Markdown")
+    }
   ]
 })

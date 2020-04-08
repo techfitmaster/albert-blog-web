@@ -2,7 +2,7 @@
   <div>
     <el-form :model="loginForm" status-icon :rules="rules" ref="loginForm" class="login-form">
       <div class="title-container">
-        <h3 class="title">登录</h3>
+        登录
       </div>
 
       <el-form-item prop="user">
@@ -32,14 +32,14 @@ export default {
   data() {
     return {
       loginForm: {
-        user: "admin",
-        password: "123456"
+        user: "",
+        password: ""
       },
       rules: {
         user: [{ required: true, message: "请输入用户名称", trigger: "blur" }],
         password: [
-          { required: true, message: "请输入密码", trigger: "blur" },
-          { min: 8, max: 18, message: "长度在 8 到 18 个字符", trigger: "blur" }
+          // { required: true, message: "请输入密码", trigger: "blur" },
+          // { min: 8, max: 18, message: "长度在 8 到 18 个字符", trigger: "blur" }
         ]
       }
     };
@@ -48,12 +48,20 @@ export default {
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
         if (valid) {
-          this.$axios
-            .post("/user/login", this.loginUser)
-            .then(res => {})
-            .catch(() => {
-                alert("请求失败");
-            });
+          if (
+            this.loginForm.user == "hzx" &&
+            this.loginForm.password == "albert"
+          ) {
+            localStorage.setItem("token", "hzx");
+            this.$parent.closeDrawer();
+            this.$notify.success("登录成功");
+          }
+          // this.$axios
+          //   .post("/user/login", this.loginUser)
+          //   .then(res => {})
+          //   .catch(() => {
+          //       alert("请求失败");
+          //   });
         } else {
           console.log("error submit!!");
           return false;
@@ -66,14 +74,21 @@ export default {
 <style scoped>
 .title-container {
   position: relative;
+  text-align: center;
+  margin-bottom:50px;
+  font-size: 24px;
+  font-family: 'Google Sans','Noto Sans Myanmar UI',arial,sans-serif;
 }
 .login-form {
   position: relative;
-  width: 500px;
+  width: 300px;
   max-width: 100%;
-  padding: 160px 35px 0;
-  margin: 0 auto;
+  padding: 50px 35px 0;
+  margin: auto auto;
+  margin-top: 200px;
   overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
+  border-radius: 30px;
 }
 </style>
 
