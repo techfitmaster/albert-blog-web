@@ -49,8 +49,8 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           if (
-            this.loginForm.user == "hzx" &&
-            this.loginForm.password == "albert"
+            this.loginForm.user === "hzx" &&
+            this.loginForm.password === "albert"
           ) {
             localStorage.setItem("token", "hzx");
             this.$parent.closeDrawer();

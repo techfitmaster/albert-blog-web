@@ -22,8 +22,9 @@
     cursor: pointer;
   }
 
+
   .click-btn:hover {
-    color: #ddd;
+    color: #0010ff;
   }
 
   .router-link-active {

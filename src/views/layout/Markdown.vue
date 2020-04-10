@@ -21,10 +21,12 @@
         @imgAdd="imgAdd"
         @imgDel="imgDel"
         :toolbars="toolbars"
+        :defaultOpen="'preview'"
+        :htmlcode="true"
       />
     </el-container>
 
-    <el-dialog title="提示" :visible.sync="dialogVisible" width="30%" center>
+    <el-dialog title="发布文章" :visible.sync="dialogVisible" width="50%" center>
       <el-form label-position="top">
         <el-form-item label="标签:">
           <el-tag
@@ -33,7 +35,8 @@
             closable
             :disable-transitions="false"
             @close="handleClose(tag)"
-          >{{tag}}</el-tag>
+          >{{tag}}
+          </el-tag>
           <el-input
             class="input-new-tag"
             v-if="inputVisible"
@@ -59,8 +62,8 @@
           <el-checkbox-group v-model="articleCategory" style="margin: 10px">
             <el-checkbox
               v-for="item in options"
-              :value="item.ukCategory"
-              :label="item.ukCategory"
+              :value="item.categoryId"
+              :label="item.categoryId"
               border
               style="margin-top: 10px"
             >
@@ -71,177 +74,187 @@
       </el-form>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="createArticle">发布文章</el-button>
+        <el-button type="primary" @click="createArticle">确定</el-button>
       </span>
     </el-dialog>
   </el-container>
 </template>
 
 <script>
-export default {
-  name: "Markdown",
-  data() {
-    return {
-      categoryName: "",
-      articleCategory: [],
-      dynamicTags: [],
-      options: [],
-      inputVisible: false,
-      inputValue: "",
-      title: "",
-      value: "",
-      dialogVisible: false,
-      toolbars: {
-        bold: true, // 粗体
-        italic: true, // 斜体
-        header: true, // 标题
-        underline: true, // 下划线
-        strikethrough: true, // 中划线
-        mark: true, // 标记
-        superscript: true, // 上角标
-        subscript: true, // 下角标
-        quote: true, // 引用
-        ol: true, // 有序列表
-        ul: true, // 无序列表
-        link: true, // 链接
-        imagelink: true, // 图片链接
-        code: true, // code
-        table: true, // 表格
-        fullscreen: true, // 全屏编辑
-        readmodel: true, // 沉浸式阅读
-        htmlcode: true, // 展示html源码
-        help: true, // 帮助
-        /* 1.3.5 */
-        undo: true, // 上一步
-        redo: true, // 下一步
-        trash: true, // 清空
-        save: true, // 保存（触发events中的save事件）
-        /* 1.4.2 */
-        navigation: true, // 导航目录
-        /* 2.1.8 */
-        alignleft: true, // 左对齐
-        aligncenter: true, // 居中
-        alignright: true, // 右对齐
-        /* 2.2.1 */
-        subfield: true, // 单双栏模式
-        preview: true // 预览
-      }
-    };
-  },
-  methods: {
-    save() {
-      alert("保存回调");
+  export default {
+    name: "Markdown",
+    data() {
+      return {
+        categoryName: "",
+        articleCategory: [],
+        dynamicTags: [],
+        options: [],
+        inputVisible: false,
+        inputValue: "",
+        title: "",
+        value: "",
+        dialogVisible: false,
+        toolbars: {
+          bold: true, // 粗体
+          italic: true, // 斜体
+          header: true, // 标题
+          underline: true, // 下划线
+          strikethrough: true, // 中划线
+          mark: true, // 标记
+          superscript: true, // 上角标
+          subscript: true, // 下角标
+          quote: true, // 引用
+          ol: true, // 有序列表
+          ul: true, // 无序列表
+          link: true, // 链接
+          imagelink: true, // 图片链接
+          code: true, // code
+          table: true, // 表格
+          fullscreen: true, // 全屏编辑
+          readmodel: true, // 沉浸式阅读
+          htmlcode: true, // 展示html源码
+          help: true, // 帮助
+          /* 1.3.5 */
+          undo: true, // 上一步
+          redo: true, // 下一步
+          trash: true, // 清空
+          save: true, // 保存（触发events中的save事件）
+          /* 1.4.2 */
+          navigation: true, // 导航目录
+          /* 2.1.8 */
+          alignleft: true, // 左对齐
+          aligncenter: true, // 居中
+          alignright: true, // 右对齐
+          /* 2.2.1 */
+          subfield: true, // 单双栏模式
+          preview: true // 预览
+        }
+      };
     },
-    imgAdd() {
-      alert("添加图片回调");
-    },
-    imgDel() {
-      alert("删除图片回调");
-    },
-    publishArticle() {
-      this.getArticleCategory();
-      this.dialogVisible = true;
-    },
-    createArticle() {
-      var token = localStorage.getItem("token");
-      if (token != "hzx") {
-      this.$notice.error("请先登录");
-        return;
-      }
+    methods: {
+      save() {
+        alert("保存回调");
+      },
+      imgAdd() {
+        alert("添加图片回调");
+      },
+      imgDel() {
+        alert("删除图片回调");
+      },
+      publishArticle() {
+        this.getArticleCategory();
+        this.dialogVisible = true;
+      },
+      createArticle() {
+        // var token = localStorage.getItem("token");
+        // if (token != "hzx") {
+        // this.$notice.error("请先登录");
+        //   return;
+        // }
 
-      this.$axios.post("/article", {
+        this.$axios.post("/article", {
           article: this.value,
           tags: this.dynamicTags,
           articleCategory: this.articleCategory,
           title: this.title
         })
-        .then(res => {
-          this.dialogVisible = false;
-          this.$message.success("发布成功");
-          this.$router.push("/");
-        })
-        .catch(() => {
-          this.$notify.error("添加文章失败");
-          this.dialogVisible = false;
-          this.$router.push("/layout");
+          .then(res => {
+            this.dialogVisible = false;
+            this.$message.success("发布成功");
+            this.$router.push("/");
+          })
+          .catch(() => {
+            this.$notify.error("添加文章失败");
+            this.dialogVisible = false;
+            this.$router.push("/layout");
+          });
+      },
+      handleClose(tag) {
+        this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
+      },
+
+      showInput() {
+        this.inputVisible = true;
+        this.$nextTick(_ => {
+          this.$refs.saveTagInput.$refs.input.focus();
         });
-    },
-    handleClose(tag) {
-      this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
-    },
+      },
 
-    showInput() {
-      this.inputVisible = true;
-      this.$nextTick(_ => {
-        this.$refs.saveTagInput.$refs.input.focus();
-      });
-    },
-
-    handleInputConfirm() {
-      let inputValue = this.inputValue;
-      if (inputValue) {
-        this.dynamicTags.push(inputValue);
+      handleInputConfirm() {
+        let inputValue = this.inputValue;
+        if (inputValue) {
+          this.dynamicTags.push(inputValue);
+        }
+        this.inputVisible = false;
+        this.inputValue = "";
+      },
+      getArticleCategory() {
+        this.$axios
+          .get("/article/category/list")
+          .then(res => {
+            console.log(res);
+            this.options = res.data.data;
+          })
+          .catch(() => {
+          });
+      },
+      createCategory() {
+        this.$axios
+          .post("/article/category", {
+            categoryName: this.categoryName
+          })
+          .then(res => {
+            this.getArticleCategory();
+          })
+          .catch(() => {
+          });
+      },
+      categoryChange(value) {
+        this.categoryName = value;
+        alert(this.categoryName);
       }
-      this.inputVisible = false;
-      this.inputValue = "";
     },
-    getArticleCategory() {
-      this.$axios
-        .get("/article/category/list")
-        .then(res => {
-          console.log(res);
-          this.options = res.data.data;
-        })
-        .catch(() => {
-        });
+    props: {
+      isVisible: Boolean
     },
-    createCategory() {
-      alert(this.categoryName);
-      this.$axios
-        .post("/article/category", {
-          categoryName: this.categoryName
-        })
-        .then(res => {
-          this.getArticleCategory();
-        })
-        .catch(() => {
-        });
-    },
-    categoryChange(value) {
-      this.categoryName = value;
-      alert(this.categoryName);
+    created() {
     }
-  },
-  props: {
-    isVisible: Boolean
-  },
-  created() {
-  }
-};
+  };
 </script>
 
 <style scoped>
-.mavon-editor {
-  width: 100%;
-  height: 1000px;
-  /*z-index: -1;*/
-  border: 1px solid #ffffff;
-}
+  .mavon-editor {
+    width: 100%;
+    height: 1000px;
+    /*z-index: -1;*/
+    border: 1px solid #ffffff;
 
-.el-tag + .el-tag {
-  margin-left: 10px;
-}
 
-.button-new-tag {
-  height: 32px;
-  line-height: 30px;
-  padding-top: 0;
-  padding-bottom: 0;
-}
+  }
 
-.input-new-tag {
-  width: 90px;
-  margin-left: 10px;
-  vertical-align: bottom;
-}
+  .custom-tree-node {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 14px;
+    padding-left: 8px;
+  }
+
+  .el-tag + .el-tag {
+    margin-left: 10px;
+  }
+
+  .button-new-tag {
+    height: 32px;
+    line-height: 30px;
+    padding-top: 0;
+    padding-bottom: 0;
+  }
+
+  .input-new-tag {
+    width: 90px;
+    margin-left: 10px;
+    vertical-align: bottom;
+  }
 </style>
