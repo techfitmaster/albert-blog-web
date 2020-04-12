@@ -61,13 +61,14 @@
         <el-form-item label style="background-color: rgba(78,137,148,0.07)">
           <el-checkbox-group v-model="articleCategory" style="margin: 10px">
             <el-checkbox
-              v-for="item in options"
-              :value="item.categoryId"
-              :label="item.categoryId"
+              v-for="(item,index) in options"
+              :key="index"
+              :value="item.name"
+              :label="item.id"
               border
               style="margin-top: 10px"
             >
-              {{item.categoryName}}
+              {{item.name}}
             </el-checkbox>
           </el-checkbox-group>
         </el-form-item>
@@ -151,35 +152,32 @@
         // this.$notice.error("请先登录");
         //   return;
         // }
-
         this.$axios.post("/article", {
           article: this.value,
           tags: this.dynamicTags,
-          articleCategory: this.articleCategory,
+          categories: this.articleCategory,
           title: this.title
         })
           .then(res => {
             this.dialogVisible = false;
             this.$message.success("发布成功");
-            this.$router.push("/");
+            // this.$router.push("/");
           })
           .catch(() => {
             this.$notify.error("添加文章失败");
-            this.dialogVisible = false;
-            this.$router.push("/layout");
+            // this.dialogVisible = false;
+            // this.$router.push("/layout");
           });
       },
       handleClose(tag) {
         this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
       },
-
       showInput() {
         this.inputVisible = true;
         this.$nextTick(_ => {
           this.$refs.saveTagInput.$refs.input.focus();
         });
       },
-
       handleInputConfirm() {
         let inputValue = this.inputValue;
         if (inputValue) {
@@ -190,7 +188,7 @@
       },
       getArticleCategory() {
         this.$axios
-          .get("/article/category/list")
+          .get("/article/category")
           .then(res => {
             console.log(res);
             this.options = res.data.data;
@@ -228,10 +226,7 @@
     height: 1000px;
     /*z-index: -1;*/
     border: 1px solid #ffffff;
-
-
   }
-
   .custom-tree-node {
     flex: 1;
     display: flex;
@@ -240,18 +235,15 @@
     font-size: 14px;
     padding-left: 8px;
   }
-
   .el-tag + .el-tag {
     margin-left: 10px;
   }
-
   .button-new-tag {
     height: 32px;
     line-height: 30px;
     padding-top: 0;
     padding-bottom: 0;
   }
-
   .input-new-tag {
     width: 90px;
     margin-left: 10px;

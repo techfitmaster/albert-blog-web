@@ -36,7 +36,7 @@ axios.interceptors.request.use(config => {
 // 响应拦截  401 token过期处理
 axios.interceptors.response.use(response => {
      endLoading()
-    if(response.data.code != "0") {
+    if(response.data.code !== 0) {
         notice.error(response.data.msg)
     }
     return response
