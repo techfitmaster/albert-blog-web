@@ -10,30 +10,23 @@
       :editable="false"
     />
   </el-container>
+
 </template>
 
 <script>
-  import VueMarkdown from "vue-markdown";
-
   export default {
-    name: "Article",
-    data() {
+    name: "ArticleDetail"
+    , data() {
       return {
-
+        value: '',
       };
     },
-    props: {
-      value: String
-    },
-    methods: {
 
-    },
-    components: {
-      VueMarkdown
+    created() {
+      this.value = this.$route.query.value
     },
 
-
-  };
+  }
 </script>
 
 <style scoped>

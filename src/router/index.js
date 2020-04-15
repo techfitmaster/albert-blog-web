@@ -1,7 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import NotFound from '@/views/404'
-import Login from '@/views/login/index'
 
 Vue.use(Router)
 
@@ -10,25 +8,48 @@ export default new Router({
     {
       path: '/',
       name: '首页',
-      component: ()=> import('@/views/layout/index')
+      component: () => import('@/views/Home'),
+      redirect: '/article',
+      children: [
+        {
+          path: '/article',
+          name: '文章',
+          component: () => import('@/views/Article'),
+          redirect: '/article/list',
+          children: [
+            {
+              path: '/article/list',
+              name: '文章列表',
+              component: () => import('@/views/ArticleList')
+            }, {
+              path: '/article/:id',
+              name: '文章详情',
+              component: () => import('@/views/ArticleDetail'),
+            }
+          ]
+        },
+        {
+          path: '/mine',
+          name: '登录',
+          component: () => import('@/views/Mine'),
+        }
+      ]
     },
+
     {
       path: '/login',
       name: '登录',
-      component: Login
+      component: () => import('@/views/Login'),
     },
     {
       path: '*',
-
-
-
       name: '/404',
-      component: NotFound
+      component: () => import('@/views/404'),
     },
     {
-      path:'/write',
-      name:'/写文章',
-      component:()=>import("@/views/layout/Markdown")
+      path: '/write',
+      name: '/写文章',
+      component: () => import("@/views/Markdown")
     }
   ]
 })

@@ -1,10 +1,9 @@
 <template>
-  <div>
+  <div style="height: 100%;">
     <el-form :model="loginForm" status-icon :rules="rules" ref="loginForm" class="login-form">
       <div class="title-container">
         登录
       </div>
-
       <el-form-item prop="user">
         <el-input type="user" v-model="loginForm.user" autocomplete="off" placeholder="请输入用户"></el-input>
       </el-form-item>
@@ -21,15 +20,14 @@
         type="primary"
         style="width:100%;margin-bottom:30px;"
         @click="submitForm('loginForm')"
-      >登录
-      </el-button>
+      >登录</el-button>
     </el-form>
   </div>
 </template>
 
 <script>
   export default {
-    name: "404",
+    name: "Login",
     data() {
       return {
         loginForm: {
@@ -37,7 +35,7 @@
           password: ""
         },
         rules: {
-          user: [{required: true, message: "请输入用户名称", trigger: "blur"}],
+          user: [{ required: true, message: "请输入用户名称", trigger: "blur" }],
           password: [
             // { required: true, message: "请输入密码", trigger: "blur" },
             // { min: 8, max: 18, message: "长度在 8 到 18 个字符", trigger: "blur" }
@@ -70,16 +68,9 @@
         });
       }
     }
-  }
+  };
 </script>
-
 <style scoped>
-
-  div {
-    /*background-color: #409eff;*/
-    height: 100%;
-
-  }
   .title-container {
     position: relative;
     text-align: center;
@@ -92,10 +83,12 @@
     width: 300px;
     max-width: 100%;
     padding: 50px 35px 0;
+    margin: auto auto;
+    margin-top: 200px;
     overflow: hidden;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
     border-radius: 30px;
   }
-
 </style>
+
 

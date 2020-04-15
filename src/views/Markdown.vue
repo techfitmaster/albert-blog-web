@@ -1,6 +1,6 @@
 <template>
-  <el-container>
-    <el-header>
+  <el-container style="height: 100%">
+    <el-header style="margin-top: 20px">
       <el-row type="flex">
         <el-col :span="6"></el-col>
         <el-col :span="10">
@@ -15,7 +15,7 @@
     <el-container>
       <mavon-editor
         v-model="value"
-        class="mavon-editor"
+        style="height: 100%;width: 100%"
         navigation
         @save="save"
         @imgAdd="imgAdd"
@@ -223,10 +223,11 @@
 <style scoped>
   .mavon-editor {
     width: 100%;
-    height: 1000px;
+    height: 100vh;
     /*z-index: -1;*/
     border: 1px solid #ffffff;
   }
+
   .custom-tree-node {
     flex: 1;
     display: flex;
@@ -235,15 +236,18 @@
     font-size: 14px;
     padding-left: 8px;
   }
+
   .el-tag + .el-tag {
     margin-left: 10px;
   }
+
   .button-new-tag {
     height: 32px;
     line-height: 30px;
     padding-top: 0;
     padding-bottom: 0;
   }
+
   .input-new-tag {
     width: 90px;
     margin-left: 10px;
