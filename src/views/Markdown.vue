@@ -15,6 +15,7 @@
     <el-container>
       <mavon-editor
         v-model="value"
+        @change="changeData"
         style="height: 100%;width: 100%"
         navigation
         @save="save"
@@ -86,6 +87,7 @@
     name: "Markdown",
     data() {
       return {
+        contentHtml:"",
         categoryName: "",
         articleCategory: [],
         dynamicTags: [],
@@ -133,6 +135,11 @@
       };
     },
     methods: {
+      changeData(value, render) {
+        console.log(value);
+        console.log(render);
+        this.contentHtml = render;
+      },
       save() {
         alert("保存回调");
       },
@@ -154,6 +161,7 @@
         // }
         this.$axios.post("/article", {
           article: this.value,
+          articleHtml: this.contentHtml,
           tags: this.dynamicTags,
           categories: this.articleCategory,
           title: this.title

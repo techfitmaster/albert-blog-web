@@ -1,6 +1,6 @@
 <template>
   <el-container>
-    <el-header style="z-index:999999">
+    <el-header style="z-index:1">
       <el-row type="flex" :gutter="20">
         <el-col :span="8" class="header-title">
           <div @click="goHome()">爱折腾的Albert</div>
@@ -11,7 +11,7 @@
             suffix-icon="el-icon-search"
             v-model="search"
             class="click-btn"
-            @select="handleSelect"
+            @change="handleSelect"
           ></el-input>
         </el-col>
         <el-col :span="10" :offset="4" class="nav">
@@ -32,20 +32,28 @@
       </el-row>
     </el-header>
     <el-container style="margin:100px 25% 0 25%;padding: 0">
-      <router-view></router-view>
+      <transition name="el-fade-in">
+        <router-view></router-view>
+      </transition>
     </el-container>
+    <el-footer height="200px"></el-footer>
   </el-container>
 </template>
 
 <script>
+  import router from "../router";
+  import NProgress from "nprogress";
+
   export default {
     name: "Layout",
     data() {
       return {
+        htmlMD: "",
         search: "",
       };
     },
     methods: {
+
       getArticleCategory() {
         this.$axios
           .get("/article/category/list")
@@ -57,6 +65,10 @@
           });
       },
       handleSelect() {
+        this.$router.push({
+          path: '/article/list/0/'+ this.search
+        })
+        this.search= ""
 
       },
       goHome() {
@@ -68,6 +80,7 @@
     },
     created() {
       this.getArticleCategory();
+      // this.htmlMD = require('../121501.md');
     }
   };
 </script>

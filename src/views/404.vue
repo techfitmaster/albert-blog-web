@@ -1,29 +1,6 @@
 <template>
   <div>
-    <el-form :model="loginForm" status-icon :rules="rules" ref="loginForm" class="login-form">
-      <div class="title-container">
-        登录
-      </div>
-
-      <el-form-item prop="user">
-        <el-input type="user" v-model="loginForm.user" autocomplete="off" placeholder="请输入用户"></el-input>
-      </el-form-item>
-      <el-form-item prop="password">
-        <el-input
-          type="password"
-          v-model="loginForm.password"
-          autocomplete="off"
-          placeholder="请输入密码"
-        ></el-input>
-      </el-form-item>
-      <el-button
-        :loading="loading"
-        type="primary"
-        style="width:100%;margin-bottom:30px;"
-        @click="submitForm('loginForm')"
-      >登录
-      </el-button>
-    </el-form>
+    <el-backtop target=".page-component__scroll .el-scrollbar__wrap"></el-backtop>
   </div>
 </template>
 

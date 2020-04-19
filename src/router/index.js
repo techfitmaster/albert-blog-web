@@ -15,12 +15,12 @@ export default new Router({
           path: '/article',
           name: '文章',
           component: () => import('@/views/Article'),
-          redirect: '/article/list',
+          redirect: '/article/list/0/0',
           children: [
             {
-              path: '/article/list',
+              path: '/article/list/:categoryId/:key',
               name: '文章列表',
-              component: () => import('@/views/ArticleList')
+              component: () => import('@/views/ArticleList'),
             }, {
               path: '/article/:id',
               name: '文章详情',

@@ -7,12 +7,12 @@
       </el-row>
       <el-row type="flex">
         <el-col>
-          <el-card shadow="always" style="background-color:#f9fafc;border-radius: 10px;">
+          <el-card  shadow="never" style="background-color:#f9fafc; border-radius: 10px;border: 0" class="box-shadow" >
             <el-row style="width:100%;color: #3a8ee6">
-              <div @click="goHome()" class="click-btn">分类</div>
+              <div @click="goHome()" class="click-btn" style="font-weight: bold">分类</div>
             </el-row>
             <el-divider></el-divider>
-            <el-row type="flex" style="margin-top:10px;font-size: 16px;" v-for="(item,index) in categories"
+            <el-row  type="flex" style="margin-top:5px;font-size: 16px; padding: 10px" v-for="(item,index) in categories"
                     :key="index">
               <el-col :span="12" style="text-align: left;color: #409eff">
                 <div class="click-btn" @click="goArticleList(item)">{{item.categoryName}}</div>
@@ -24,7 +24,9 @@
       </el-row>
     </el-aside>
     <el-main style="margin-left: 2%;padding: 0;">
-      <router-view></router-view>
+      <transition name="el-fade-in-linear">
+        <router-view></router-view>
+      </transition>
     </el-main>
 
   </el-container>
@@ -56,10 +58,7 @@
       },
       goArticleList(item) {
         this.$router.push({
-          path: '/article/list',
-          // query: {
-          //   categoryId: item.categoryId
-          // }
+          path: '/article/list/' + item.id + '/0' ,
         })
       }
     },

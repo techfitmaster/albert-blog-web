@@ -1,11 +1,13 @@
 <template>
   <div id="app">
-    <router-view/>
+    <transition name="el-fade-in">
+      <router-view/>
+    </transition>
   </div>
 </template>
 <script>
     export default {
-        name: "App"
+        name: "App",
     };
 </script>
 
@@ -20,6 +22,12 @@
     height: 100%;
   }
 
+  .fade-enter-active, .fade-leave-avtive {
+    transition: opacity 1s
+  }
+  .fade-enter, .fade-leave-to {
+    opacity: 0
+  }
   .click-btn {
     cursor: pointer;
   }
@@ -28,6 +36,15 @@
   .click-btn:hover {
     color: #0010ff;
   }
+
+  .box-shadow {
+    cursor: pointer;
+  }
+
+  .box-shadow:hover {
+    box-shadow: 0 2px 16px 0 rgba(0, 0, 0, 0.1);border: 0
+  }
+
 
   .router-link-active {
     text-decoration: none;
